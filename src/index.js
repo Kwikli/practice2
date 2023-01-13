@@ -1,18 +1,20 @@
-import Vue from 'vue'
+import { createApp } from 'vue'
 import axios from 'axios'
-import VueAxios from 'vue-axios'
 
-
-new Vue({
-    el: '#app',
-    data: {
-        students: [],
-    },	 
-    mounted: function(){
+createApp({
+    data() {
+       return {
+           students: [],
+           search:'',
+           student: {name: "", zdav: false, group: ""}
+       }
+    },
+    mounted () {
         axios.get("http://34.82.81.113:3000/students").then((response) => {
             console.log(response.data);
             this.students = response.data;
         })
+        
     },
     methods: {
        deleteStudent(studId) {
@@ -25,5 +27,4 @@ new Vue({
            this.students.push(this.student);
        }
     },
- 
-});
+ }).mount('#app');
