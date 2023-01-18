@@ -2,15 +2,31 @@
    <div>
         <input type="text" name="search" v-model="search" placeholder="Пошук..."><br>
 		<table class="table table-dark">
-			<tr :id="item._id" v-for="item in students"  v-bind:key="item._id"> 
-				<td>{{item.name}}</td>
-				<td><input type="checkbox" :class="item.isDonePr" v-model="item.isDonePr"></td>
-				<td>{{item.group}}</td>
-                <td>
-                    <up @click="deleteStudent(item._id)"><img src="del.png" alt="delete"></up>
-                    <up @click="updateStudent(item._id)"><img src="edit.png" alt="delete"></up>
-                </td>
-                
+			<tr v-for="item in students"  v-bind:key="item.Ref">
+                <template v-if="item._id != editSt"> 
+                    <td>{{item.name}}</td>
+                    <td><input type="checkbox" :class="item.isDonePr" v-model="item.isDonePr"></td>
+                    <td>{{item.group}}</td>
+                    <td>
+                        <up @click="deleteStudent(item._id)"><img src="del.png" alt="delete"></up>
+                        <up @click="updateStudent(item._id)"><img src="edit.png" alt="delete"></up>
+                    </td>
+                </template>
+                <template v-else>
+                    <td><input type="text" v-model="item.name"></td>
+                    <td><input type="checkbox" :class="item.isDonePr" v-model="item.isDonePr"></td>
+                    <td>
+                        <select v-model="student.group">
+                            <option value="" selected>{{item.group}}</option>
+                            <option v-if="item.group != 'RPZ 19 1/9'" value="RPZ 19 1/9">RPZ 19 1/9</option>
+                            <option v-if="item.group != 'RPZ 19 2/9'" value="RPZ 19 2/9">RPZ 19 2/9</option>
+                        </select>
+                    </td>
+                     <td>
+                        <up @click="deleteStudent(item._id)"><img src="del.png" alt="delete"></up>
+                        <up @click="updateStudentPut(item._id)"><img src="edit.png" alt="delete"></up>
+                    </td>
+                </template>
 			</tr>
 		</table>
         
@@ -22,7 +38,6 @@
 			<option value="RPZ 19 2/9">RPZ 19 2/9</option>
 		</select>
 		<br><button @click="addStudent()">Додати студента</button>
-        
    </div>
 </template>
  
@@ -34,11 +49,13 @@ export default {
        return {
            students: [],
            search:'',
-           student: {name: "", isDonePr: false, group: ""}
+           student: {name: "", isDonePr: false, group: ""},
+           editSt:0
        }
     },
     mounted() {
         this.getData();
+        
     },
     methods: {
         getData(){
@@ -46,6 +63,7 @@ export default {
                     .then(data => {
                         this.students =  data.data;
                         this.mounted;
+                        console.log(this.students);
                     })
         },
         deleteStudent(studId) {
@@ -57,22 +75,28 @@ export default {
                 })
             this.$forceUpdate();
         },
-        updateStudent(studId){
-            console.log('update - ',studId);
-            var updatetmpl = `<td><input type="text" :value="item.name"></td>
-				<td><input type="checkbox" :class="item.isDonePr" v-model="item.isDonePr"></td>
-				<td>
-                    <select v-model="student.group">
-                        <option value="" selected>{{item.group}}</option>
-                        <option v-if="item.group != 'RPZ 19 1/9'" value="RPZ 19 1/9">RPZ 19 1/9</option>
-                        <option v-if="item.group != 'RPZ 19 2/9'" value="RPZ 19 2/9">RPZ 19 2/9</option>
-                    </select>
-                </td>`;
-            axios.put("http://34.82.81.113:3000/students/"+studId).then(data => {
-                console.log(data); 
-                this.getData();
-            });
+        updateStudent(id){
+            console.log('update - ',id);
+            this.editSt = id;
             this.$forceUpdate();
+        },
+        updateStudentPut(id){
+            let foundStudent = this.students.find((element) => {
+                return element._id == id;
+            });
+
+            axios.put("http://34.82.81.113:3000/students/"+id, {
+                name: foundStudent.name,
+                group: foundStudent.group,
+                isDonePr: foundStudent.isDonePr
+            }).then((response) => {
+                console.log(response.data);
+                this.getData();
+                this.$forceUpdate();
+            })
+            this.editSt = 0;
+            
+            
         },
         addStudent() {
             console.log('add - ',this.student);
@@ -82,7 +106,7 @@ export default {
                     this.getData();
                 })
             this.$forceUpdate();    
-       }
+       },
     },
 }
  </script>

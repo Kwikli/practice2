@@ -99,10 +99,19 @@ input, select{
     background-color: transparent;
     border: none;
     border-bottom: 1px solid #a9a9a9;
-    text-align: center;
-    font-size: 24px;
+    
+    font-size: 17px;
     outline: none;
     margin: 10px;
+}
+tr td input, tr td select{
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #a9a9a9;
+    
+    font-size: 17px;
+    outline: none;
+    margin: 0px;
 }
 #funct button{
     margin: 15px 0;
@@ -159,4 +168,7 @@ table{
 }
 tr{
     border-bottom: 1px solid #363636 !important;
+}
+.table-dark{
+    margin: 15px;
 }
