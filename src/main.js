@@ -1,35 +1,18 @@
 import { createApp } from 'vue'
+import { createRouter, createWebHashHistory } from 'vue-router'
 
 import App from './components/App.vue'
+import Students from './components/Students.vue'
+import StudentInfo from './components/StudentInfo.vue'
+
+const routes = [
+  {path: "/", component: Students},
+  {path: "/student-info/:id", component: StudentInfo, props: true}
+];
   
-createApp(App).mount('#app');
+const router = createRouter({
+  history: createWebHashHistory(),
+  routes,
+})
 
-// import axios from 'axios'
-
-// createApp({
-//     data() {
-//        return {
-//            students: [],
-//            search:'',
-//            student: {name: "", zdav: false, group: ""}
-//        }
-//     },
-//     mounted () {
-//         axios.get("http://34.82.81.113:3000/students").then((response) => {
-//             console.log(response.data);
-//             this.students = response.data;
-//         })
-        
-//     },
-//     methods: {
-//        deleteStudent(studId) {
-//            this.students = this.students.filter(elem => {
-//                return elem.id != studId;
-//            });
-//        },
-//        addStudent() {
-//            this.student.id = this.students.length+1;
-//            this.students.push(this.student);
-//        }
-//     },
-//  }).mount('#app');
+createApp(App).use(router).mount('#app');
