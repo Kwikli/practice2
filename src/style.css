@@ -5,7 +5,7 @@
 }
 .header{
     width: 100%;
-    background: #4fcc79;
+    background: #e6e6e6;
     color: #1f1f1f;
     line-height: 50px;
     font-size: 26px;
@@ -29,14 +29,14 @@
     width: 100%;
     font-size: 24px;
 }
-.content div{
+/* .content div{
     display: flex;
     flex-wrap: wrap;
     flex-direction: column;
     align-items: flex-start;
     width: 100%;
     width: 100%;
-}
+} */
 .header button{
     border: none;
     background: #1e1e1e;
@@ -49,7 +49,7 @@ body{
     margin: 0;
     min-height: 100vh;
     font-family: Arial, Helvetica, sans-serif;
-    background-color: #ffffff;
+    background-color: #fffffa;
 }
 .theme{
     display: flex;
@@ -111,16 +111,19 @@ body{
     object-fit: cover;
 }
 #app button{
-    width: 30%;
+    padding: 2px 15px;
     margin: 5px;
     height: 45px;
-    
     background-color: #363636;
     border: 1px solid #a9a9a9;
     border-radius: 10px;
     font-size: 24px;
     color: #f5feff;
-    
+    transition: 0.3s;
+}
+#app button:hover{
+    cursor: pointer;
+    box-shadow: 0px 0px 10px 0px #707070;
 }
 .btn_active{
     background-color: #4beb23 !important;
@@ -132,6 +135,9 @@ input, select{
     font-size: 22px;
     outline: none;
     margin: 10px 15px;
+}
+input{
+    text-align: center;
 }
 tr td input, tr td select{
     background-color: transparent;
@@ -232,4 +238,49 @@ card{
     flex-direction: column;
     /* align-items: center; */
     text-align: center;
+}
+
+.row{
+    width: 100%;
+    display: flex;
+}
+.col{
+    width: 33%;
+    margin: 2px;
+}
+.weather_content{
+    border-radius: 10px;
+    background: #00000017;
+    padding: 10px;
+    margin: 35px auto;
+    box-shadow: 0px 0px 20px 0px #a9a9a9;
+    border: 2px solid #c3c3c3;
+    max-width: 1025px;
+}
+.coll{
+    width: 33%;
+    margin: 2px 10px;
+    text-align: right;
+}
+.coll img{
+    
+    
+    width: 30px;
+    height: 30px;
+}
+.phone_img{
+    position: absolute;
+    width: 215px;
+    height: 215px;
+}
+.row50{
+    width: 100%;
+    display: flex;
+}
+.col50{
+    width: 50%;
+    text-align:center;
+}
+.col b{
+    margin-left: 42%;
 }
